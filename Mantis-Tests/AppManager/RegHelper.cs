@@ -1,9 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mantis_Tests
 {
@@ -17,17 +12,16 @@ namespace Mantis_Tests
             OpenRegistrationForm();
             FillRegistrationForm(account);
             SubmitRegistration();
-
         }
 
         private void OpenRegistrationForm()
         {
-            driver.FindElement(By.CssSelector("a.back-to-login-link")) .Click();
+            manager.Driver.Url = "http://localhost/mantisbt-1.3.20/signup_page.php";
         }
     
         public void SubmitRegistration()
         {
-            driver.FindElement(By.CssSelector("input.btn")).Click();
+            driver.FindElement(By.CssSelector("input.button")).Click();
         }
 
         public void FillRegistrationForm(AccountData account)
@@ -38,7 +32,7 @@ namespace Mantis_Tests
 
         public void OpenMainPage()
         {
-            manager.Driver.Url = "http://localhost/mantisbt-2.25.2/login_page.php";
+            manager.Driver.Url = "http://localhost/mantisbt-1.3.20/login_page.php";
         }
     }
 }

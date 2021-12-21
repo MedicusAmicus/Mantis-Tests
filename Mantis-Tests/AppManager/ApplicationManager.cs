@@ -1,41 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-//using System.Text.RegularExpressions;
-using System.Threading;
-//using System.Threading.Tasks;
-//using NUnit.Framework;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-//using OpenQA.Selenium.Support.UI;
+using System;
+using System.Text;
+using System.Threading;
+using SimpleBrowser.WebDriver;
+
 
 namespace Mantis_Tests
 {
     public class ApplicationManager
     {
         protected IWebDriver driver;
-        private StringBuilder verificationErrors;
+       
         protected string baseURL;
 
         public RegHelper Registration { get; set; }
         public FtpHelper Ftp { get; set; }
+        public AdminHelper Admin { get; set; }
+        public APIHelper API { get; set; }
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         private ApplicationManager()
         {
-            driver = new ChromeDriver();
-            baseURL = "http://localhost/addressbook";
+            driver = new SimpleBrowserDriver();
+            baseURL = "http://localhost/mantisbt-1.3.20/";
             Registration = new RegHelper(this);
-            Ftp = new FtpHelper(this); 
+            Ftp = new FtpHelper(this);
+            Admin = new AdminHelper(this, baseURL);
+            API = new APIHelper(this);
         }
+        
 
         public static ApplicationManager GetInstance()
         {
             if(! app.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.driver.Url = "http://localhost/mantisbt-2.25.2/login_page.php";
+                newInstance.driver.Url = "http://localhost/mantisbt-1.3.20/login_page.php";
                 app.Value = newInstance;
             }
             return app.Value;
